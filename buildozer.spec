@@ -9,5 +9,7 @@ orientation = all
 android.minapi = 21
 android.api = 30
 android.ndk = 23b
+android.sdk = 30
+android.accept_sdk_license = True
 android.permissions = INTERNET
 android.debug = 1
