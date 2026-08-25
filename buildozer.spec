@@ -1,5 +1,6 @@
 [app]
 title = X-Chess
+version = 1.0.0
 package.name = xchess
 package.domain = org.example
 source.dir = .
