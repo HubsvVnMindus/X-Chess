@@ -1,4 +1,4 @@
-name: Build X-Chess APK
+name: Build X-Chess APK (Manual)
 
 on:
   push:
@@ -27,22 +27,31 @@ jobs:
           libncurses-dev libffi-dev libssl-dev \
           cmake
 
-    - name: Install Buildozer and dependencies
+    - name: Install python-for-android
       run: |
         pip install --upgrade pip
-        pip install buildozer cython
+        pip install cython
+        pip install git+https://github.com/kivy/python-for-android.git
 
-    - name: Clean Buildozer cache
+    - name: Build APK with p4a
       run: |
-        rm -rf ~/.buildozer
-        rm -rf .buildozer
-
-    - name: Build APK with Buildozer
-      run: |
-        buildozer -v --log-level=2 android debug deploy run --accept-license
+        p4a apk \
+          --requirements=python3,kivy,plyer,pyjnius,android \
+          --bootstrap=sdl2 \
+          --package=org.example.xchess \
+          --name=X-Chess \
+          --version=1.0.0 \
+          --ndk-api=21 \
+          --android-api=30 \
+          --ndk-version=26c \
+          --arch=arm64-v8a \
+          --arch=armeabi-v7a \
+          --copy-libs \
+          --ignore-setup-py \
+          --debug
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: X-Chess-APK
-        path: bin/*.apk
+        path: *.apk
