@@ -32,14 +32,14 @@ jobs:
         pip install --upgrade pip
         pip install buildozer cython
 
-    - name: Clean Buildozer cache (fix broken SDK)
+    - name: Clean Buildozer cache
       run: |
         rm -rf ~/.buildozer
         rm -rf .buildozer
 
     - name: Build APK with Buildozer
       run: |
-        buildozer -v android debug deploy run --accept-license
+        buildozer -v --log-level=2 android debug deploy run --accept-license
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
